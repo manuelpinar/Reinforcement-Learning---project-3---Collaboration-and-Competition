@@ -57,7 +57,7 @@ Being  ----> fc1_units (int): Number of nodes in first hidden layer
              fc2_units (int): Number of nodes in second hidden layer
 
 ## RESULTS
-
+''''
 Episode 1	Average Score: 0.100
 Episode 2	Average Score: 0.100
 Episode 3	Average Score: 0.100
@@ -196,7 +196,7 @@ Episode 134	Average Score: 0.483
 Episode 135	Average Score: 0.509
 
 Environment solved in 35 episodes!	Average Score: 0.51
-
+'''
 
 ![](https://github.com/manuelpinar/Reinforcement-Learning---project-3---Collaboration-and-Competition/blob/master/maddpg.png?raw=true)
 
