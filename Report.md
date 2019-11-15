@@ -204,5 +204,5 @@ Environment solved in 35 episodes!	Average Score: 0.51
 
 ### Future improvements
 
-We could use other tipes of 
-Also, we could use other algorithms like Trust Region Policy Optimization (TRPO) and Truncated Natural Policy Gradient (TNPG) should achieve better performance. Other could be Proximal Policy Optimization (PPO), which has also demonstrated good performance with continuous control tasks.
+We could use another algorithms like PPO this algorithm was proposed in the project tips on slack. 
+Also, we could consider use other type of model, using more layers and preprocessing the data in order to improve the results.
