@@ -1,6 +1,6 @@
 # Report
 ---
-I used an reinforcement learning method called Multi-Agent Deep Deterministic Policy Gradient (MADDPG).Multi-Agent Deep Deterministic Policy Gradient (MADDPG) algorithm is a new population DRL algorithm. MADDPG is a kind of "Actor-Critic" method. Unlike DDPG algorithm which trains each agent independantly, MADDPG trains actors and critics using all agents information (actions and states). However, the trained agent model (actor) can make an inference independentaly using its own state.
+I used an reinforcement learning method called Multi-Agent Deep Deterministic Policy Gradient (MADDPG). This algorithm is a new population DRL algorithm. MADDPG is a kind of "Actor-Critic" method. Unlike DDPG algorithm which trains each agent independantly, MADDPG trains actors and critics using all agents information (actions and states). However, the trained agent model (actor) can make an inference independentaly using its own state.
 The environment is episodic, and in order to solve the environment, your agents must get an average score of +0.5 (over 100 consecutive episodes, after taking the maximum over both agents).
 
 ## Environment
@@ -44,6 +44,8 @@ I used 'theta=0.15' and 'sigma=0.2' in front of the parameters used in the last 
 
 After some modifications I observed I hadn't significative improvements when I tried to modify other parameters like bacth_size or lr_actor and lr_critic also I hadn't significative improvements.
 Neither when I tried modify the number of the layers of my 'model.py'
+
+When I found a great improvement was movind the random_seed, setting finally in 0.5.
 
 
 ### Model
