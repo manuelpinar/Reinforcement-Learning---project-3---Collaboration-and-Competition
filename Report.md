@@ -23,13 +23,6 @@ Where
 
 `n_episodes=3000`, `max_t=1000`
 
-NOTE: I needed to use the active_session function in order to prevent the disconection of the udacity workspace, adding inside the ddpg function the line
-
-''''with active_session(): #To prevent the desconection of workspace''''
-
-You must import this function from workspace_utils.py added at this repository.
-
-This is because the training could spent more than 14 hours.
 
 ###Hyperparameters
 
@@ -205,7 +198,7 @@ Episode 135	Average Score: 0.509
 Environment solved in 35 episodes!	Average Score: 0.51
 
 
-![](https://github.com/manuelpinar/Reinforcement-Learning-Project2-Continuous-Control/blob/master/graphic_average.png?raw=true)
+![](https://github.com/manuelpinar/Reinforcement-Learning---project-3---Collaboration-and-Competition/blob/master/maddpg.png?raw=true)
 
 ### Future improvements
 
