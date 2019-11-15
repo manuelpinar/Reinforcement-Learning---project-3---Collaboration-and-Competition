@@ -11,7 +11,7 @@ The observation space consists of 8 variables corresponding to the position and 
 ## Learning Algorithm
  I used the maddpg algorithm taking the agent from 'ddpg_agent.py' 
  
- We must take in account that when I call the function ddpg in the notebook 'Continuous_Control.ipynb' the enter parameters of this function was modified in order to adapt the requirements of this project. 
+ We must take in account that when I call the function maddpg in the notebook 'Tennis.ipynb' the enter parameters of this function was modified in order to adapt the requirements of this project. 
  
 ### Using
 
