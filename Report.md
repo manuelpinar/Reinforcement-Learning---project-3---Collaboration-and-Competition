@@ -1,25 +1,27 @@
 # Report
 ---
-I used the DDPG (Deep Deterministic Policy Gradient) extracted of ddpg-pendulum example explained in the classroom and adapted for a 20 agent, because I chose the option 2 that uses 20 different agents and this yields 20 (potentially different) scores. I will take the average of these 20 scores.
-The environment is considered solved, when the average (over 100 episodes) of those average scores is at least +30.
+I used an reinforcement learning method called Multi-Agent Deep Deterministic Policy Gradient (MADDPG).Multi-Agent Deep Deterministic Policy Gradient (MADDPG) algorithm is a new population DRL algorithm. MADDPG is a kind of "Actor-Critic" method. Unlike DDPG algorithm which trains each agent independantly, MADDPG trains actors and critics using all agents information (actions and states). However, the trained agent model (actor) can make an inference independentaly using its own state.
+The environment is episodic, and in order to solve the environment, your agents must get an average score of +0.5 (over 100 consecutive episodes, after taking the maximum over both agents).
 
 ## Environment
-In this environment, a double-jointed arm can move to target locations. A reward of +0.1 is provided for each step that the agent's hand is in the goal location. Thus, the goal of your agent is to maintain its position at the target location for as many time steps as possible.
+In this environment, two agents control rackets to bounce a ball over a net. If an agent hits the ball over the net, it receives a reward of +0.1. If an agent lets a ball hit the ground or hits the ball out of bounds, it receives a reward of -0.01. Thus, the goal of each agent is to keep the ball in play.
 
-The observation space consists of 33 variables corresponding to position, rotation, velocity, and angular velocities of the arm. Each action is a vector with four numbers, corresponding to torque applicable to two joints. Every entry in the action vector must be a number between -1 and 1.
+The observation space consists of 8 variables corresponding to the position and velocity of the ball and racket. Each agent receives its own, local observation. Two continuous actions are available, corresponding to movement toward (or away from) the net, and jumping.
 
 ## Learning Algorithm
- I used the ddpg algorithm 'ddpg_agent.py' 
+ I used the maddpg algorithm taking the agent from 'ddpg_agent.py' 
  
  We must take in account that when I call the function ddpg in the notebook 'Continuous_Control.ipynb' the enter parameters of this function was modified in order to adapt the requirements of this project. 
  
 ### Using
 
+- num_agents = 2
 - n_episodes (int): maximum number of training episodes
 - max_t (int): maximum number of timesteps per episode
 
 Where
-`n_episodes=300`, `max_t=1000`
+
+`n_episodes=3000`, `max_t=1000`
 
 NOTE: I needed to use the active_session function in order to prevent the disconection of the udacity workspace, adding inside the ddpg function the line
 
@@ -31,21 +33,23 @@ This is because the training could spent more than 14 hours.
 
 ###Hyperparameters
 
-- BUFFER_SIZE (int):  int(1e6) replay buffer size
-- BATCH_SIZ (int): 1024 mini batch size
-- GAMMA (float): 0.99 discount factor
-- TAU (float): 1e-3  for soft update of target parameters
-- LR_ACTOR (float): 1e-4 learning rate for optimizer
-- LR_CRITIC (float): 1e-4 learning rate for optimizer
-- WEIGHT_DECAY (float): 0 L2 weight decay
-- N_LEARN_UPDATES (int): 10 number of learning updates
-- N_TIME_STEPS (int): 20 every n time step do update
+BUFFER_SIZE = int(1e6)  # replay buffer size
+BATCH_SIZE = 512        # minibatch size
+GAMMA = 0.99            # discount factor
+TAU = 4e-2              # for soft update of target parameters
+LR_ACTOR = 5e-4         # learning rate of the actor
+LR_CRITIC = 4e-4        # learning rate of the critic
+WEIGHT_DECAY = 0.0      # L2 weight decay
+
+EPSILON = 1.0           # initial noise
+EPSILON_DECAY = 5e-3    # noise decay
+
 
 The main modification in this 'ddpg_agent.py' is in OUNoise parameters:
 
-I modified 'theta=0.16' and 'sigma=0.1' following the instrunction given in the nanodegree by Alessandro Restagno in the project TIPS.
+I used 'theta=0.15' and 'sigma=0.2' in front of the parameters used in the last project.
 
-After this modifications I observed a huge improvement in the learning of my algorithm. I hadn't significative improvements when I tried to modify other parameters like bacth_size or lr_actor and lr_critic.
+After some modifications I observed I hadn't significative improvements when I tried to modify other parameters like bacth_size or lr_actor and lr_critic also I hadn't significative improvements.
 Neither when I tried modify the number of the layers of my 'model.py'
 
 
@@ -53,72 +57,153 @@ Neither when I tried modify the number of the layers of my 'model.py'
 
 The model was extracted of the example provided in ddpg-pendulum of the DRLND repository and modified the number of units of the actor and the critic:
 
-Actor ----  fc1_units=256, fc2_units=128
-Critic ---- fc1_units=256, fc2_units=128
+Actor ----  fc1_units=200, fc2_units=100
+Critic ---- fc1_units=200, fc2_units=100
 
 Being  ----> fc1_units (int): Number of nodes in first hidden layer
              fc2_units (int): Number of nodes in second hidden layer
 
 ## RESULTS
 
-```
-Episode 1	Average Score: 0.62
-Episode 2	Average Score: 1.02
-Episode 3	Average Score: 1.24
-Episode 4	Average Score: 1.65
-Episode 5	Average Score: 1.90
-Episode 6	Average Score: 2.41
-Episode 7	Average Score: 2.96
-Episode 8	Average Score: 3.59
-Episode 9	Average Score: 4.45
-Episode 10	Average Score: 5.16
-Episode 11	Average Score: 6.21
-Episode 12	Average Score: 7.47
-Episode 13	Average Score: 8.73
-Episode 14	Average Score: 10.05
-Episode 15	Average Score: 11.38
-Episode 16	Average Score: 12.62
-Episode 17	Average Score: 13.76
-Episode 18	Average Score: 14.84
-Episode 19	Average Score: 15.78
-Episode 20	Average Score: 16.74
-Episode 21	Average Score: 17.61
-Episode 22	Average Score: 18.49
-Episode 23	Average Score: 19.34
-Episode 24	Average Score: 20.09
-Episode 25	Average Score: 20.78
-Episode 26	Average Score: 21.42
-Episode 27	Average Score: 22.04
-Episode 28	Average Score: 22.60
-Episode 29	Average Score: 23.12
-Episode 30	Average Score: 23.60
-Episode 31	Average Score: 24.08
-Episode 32	Average Score: 24.54
-Episode 33	Average Score: 24.95
-Episode 34	Average Score: 25.33
-Episode 35	Average Score: 25.69
-Episode 36	Average Score: 26.05
-Episode 37	Average Score: 26.39
-Episode 38	Average Score: 26.69
-Episode 39	Average Score: 26.96
-Episode 40	Average Score: 27.22
-Episode 41	Average Score: 27.47
-Episode 42	Average Score: 27.73
-Episode 43	Average Score: 27.99
-Episode 44	Average Score: 28.23
-Episode 45	Average Score: 28.46
-Episode 46	Average Score: 28.68
-Episode 47	Average Score: 28.88
-Episode 48	Average Score: 29.08
-Episode 49	Average Score: 29.28
-Episode 50	Average Score: 29.47
-Episode 51	Average Score: 29.63
-Episode 52	Average Score: 29.78
-Episode 53	Average Score: 29.95
-Episode 54	Average Score: 30.10
+Episode 1	Average Score: 0.100
+Episode 2	Average Score: 0.100
+Episode 3	Average Score: 0.100
+Episode 4	Average Score: 0.100
+Episode 5	Average Score: 0.080
+Episode 6	Average Score: 0.083
+Episode 7	Average Score: 0.071
+Episode 8	Average Score: 0.063
+Episode 9	Average Score: 0.056
+Episode 10	Average Score: 0.059
+Episode 11	Average Score: 0.063
+Episode 12	Average Score: 0.058
+Episode 13	Average Score: 0.061
+Episode 14	Average Score: 0.064
+Episode 15	Average Score: 0.065
+Episode 16	Average Score: 0.061
+Episode 17	Average Score: 0.063
+Episode 18	Average Score: 0.064
+Episode 19	Average Score: 0.061
+Episode 20	Average Score: 0.058
+Episode 21	Average Score: 0.055
+Episode 22	Average Score: 0.057
+Episode 23	Average Score: 0.063
+Episode 24	Average Score: 0.064
+Episode 25	Average Score: 0.066
+Episode 26	Average Score: 0.067
+Episode 27	Average Score: 0.064
+Episode 28	Average Score: 0.066
+Episode 29	Average Score: 0.067
+Episode 30	Average Score: 0.068
+Episode 31	Average Score: 0.066
+Episode 32	Average Score: 0.064
+Episode 33	Average Score: 0.062
+Episode 34	Average Score: 0.063
+Episode 35	Average Score: 0.061
+Episode 36	Average Score: 0.059
+Episode 37	Average Score: 0.058
+Episode 38	Average Score: 0.059
+Episode 39	Average Score: 0.060
+Episode 40	Average Score: 0.061
+Episode 41	Average Score: 0.062
+Episode 42	Average Score: 0.063
+Episode 43	Average Score: 0.064
+Episode 44	Average Score: 0.065
+Episode 45	Average Score: 0.068
+Episode 46	Average Score: 0.068
+Episode 47	Average Score: 0.073
+Episode 48	Average Score: 0.076
+Episode 49	Average Score: 0.076
+Episode 50	Average Score: 0.077
+Episode 51	Average Score: 0.077
+Episode 52	Average Score: 0.078
+Episode 53	Average Score: 0.078
+Episode 54	Average Score: 0.080
+Episode 55	Average Score: 0.082
+Episode 56	Average Score: 0.084
+Episode 57	Average Score: 0.085
+Episode 58	Average Score: 0.085
+Episode 59	Average Score: 0.088
+Episode 60	Average Score: 0.089
+Episode 61	Average Score: 0.094
+Episode 62	Average Score: 0.094
+Episode 63	Average Score: 0.094
+Episode 64	Average Score: 0.096
+Episode 65	Average Score: 0.097
+Episode 66	Average Score: 0.100
+Episode 67	Average Score: 0.099
+Episode 68	Average Score: 0.099
+Episode 69	Average Score: 0.099
+Episode 70	Average Score: 0.099
+Episode 71	Average Score: 0.097
+Episode 72	Average Score: 0.097
+Episode 73	Average Score: 0.100
+Episode 74	Average Score: 0.100
+Episode 75	Average Score: 0.099
+Episode 76	Average Score: 0.104
+Episode 77	Average Score: 0.105
+Episode 78	Average Score: 0.120
+Episode 79	Average Score: 0.120
+Episode 80	Average Score: 0.121
+Episode 81	Average Score: 0.120
+Episode 82	Average Score: 0.125
+Episode 83	Average Score: 0.132
+Episode 84	Average Score: 0.139
+Episode 85	Average Score: 0.153
+Episode 86	Average Score: 0.156
+Episode 87	Average Score: 0.164
+Episode 88	Average Score: 0.163
+Episode 89	Average Score: 0.171
+Episode 90	Average Score: 0.173
+Episode 91	Average Score: 0.176
+Episode 92	Average Score: 0.187
+Episode 93	Average Score: 0.200
+Episode 94	Average Score: 0.199
+Episode 95	Average Score: 0.198
+Episode 96	Average Score: 0.203
+Episode 97	Average Score: 0.228
+Episode 98	Average Score: 0.230
+Episode 99	Average Score: 0.232
+Episode 100	Average Score: 0.235
+Episode 100	Average Score: 0.235
+Episode 101	Average Score: 0.235
+Episode 102	Average Score: 0.236
+Episode 103	Average Score: 0.237
+Episode 104	Average Score: 0.237
+Episode 105	Average Score: 0.238
+Episode 106	Average Score: 0.244
+Episode 107	Average Score: 0.245
+Episode 108	Average Score: 0.256
+Episode 109	Average Score: 0.261
+Episode 110	Average Score: 0.277
+Episode 111	Average Score: 0.278
+Episode 112	Average Score: 0.298
+Episode 113	Average Score: 0.298
+Episode 114	Average Score: 0.314
+Episode 115	Average Score: 0.339
+Episode 116	Average Score: 0.340
+Episode 117	Average Score: 0.346
+Episode 118	Average Score: 0.358
+Episode 119	Average Score: 0.371
+Episode 120	Average Score: 0.397
+Episode 121	Average Score: 0.398
+Episode 122	Average Score: 0.417
+Episode 123	Average Score: 0.421
+Episode 124	Average Score: 0.426
+Episode 125	Average Score: 0.426
+Episode 126	Average Score: 0.427
+Episode 127	Average Score: 0.445
+Episode 128	Average Score: 0.452
+Episode 129	Average Score: 0.452
+Episode 130	Average Score: 0.452
+Episode 131	Average Score: 0.453
+Episode 132	Average Score: 0.459
+Episode 133	Average Score: 0.479
+Episode 134	Average Score: 0.483
+Episode 135	Average Score: 0.509
 
-Environment solved in -46 episodes!	Average Score: 30.10
-```
+Environment solved in 35 episodes!	Average Score: 0.51
+
 
 ![](https://github.com/manuelpinar/Reinforcement-Learning-Project2-Continuous-Control/blob/master/graphic_average.png?raw=true)
 
