@@ -25,7 +25,7 @@ Where
 
 
 ###Hyperparameters
-
+```
 BUFFER_SIZE = int(1e6)  # replay buffer size
 BATCH_SIZE = 512        # minibatch size
 GAMMA = 0.99            # discount factor
@@ -36,7 +36,7 @@ WEIGHT_DECAY = 0.0      # L2 weight decay
 
 EPSILON = 1.0           # initial noise
 EPSILON_DECAY = 5e-3    # noise decay
-
+```
 
 The main modification in this 'ddpg_agent.py' is in OUNoise parameters:
 
