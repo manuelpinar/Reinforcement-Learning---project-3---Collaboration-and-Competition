@@ -204,5 +204,5 @@ Environment solved in 35 episodes!	Average Score: 0.51
 
 ### Future improvements
 
-Following the tips offered by Alessandro Restagno in the nanodegree, other improvements that we could use is BachtNorm in the data.
+We could use other tipes of 
 Also, we could use other algorithms like Trust Region Policy Optimization (TRPO) and Truncated Natural Policy Gradient (TNPG) should achieve better performance. Other could be Proximal Policy Optimization (PPO), which has also demonstrated good performance with continuous control tasks.
